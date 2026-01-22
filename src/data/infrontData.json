@@ -1,0 +1,146 @@
+{
+  "hero": {
+    "name": "Elina Soosaar",
+    "title": "Etendaja"
+  },
+  "projects": [
+    {
+      "id": "peanuts",
+      "year": 2025,
+      "title": "Peanuts",
+      "medium": "Film",
+      "director": "Loviisa Jännes",
+      "role": "Peaosa, Ronja",
+      "description": "Ronja 25. sünnipäev muutub kaoseks, kui tema meeleheitlik tähelepanupüüdlus viib poiss-sõbra raske allergilise reaktsioonini ja valesti tõlgendatud \"enesetapukatseni\". Järgneva paanika ja koguneva rahvahulga keskel saavutab Ronja lõpuks tähelepanu keskpunkti, mida ta nii meeleheitlikult ihaldas.",
+      "mediaFolder": "peanuts",
+      "priority": 9,
+      "externalLink": "https://www.efis.ee/en/film/21746",
+      "awards": ["BOB 2025 nominatsioon – parim naisnäitleja"],
+      "reviewLink": "https://dmovies.org/2025/11/12/peanuts/"
+    },
+    {
+      "id": "bakhandid",
+      "year": 2024,
+      "title": "Bakhandid",
+      "medium": "Teater",
+      "director": "Elina Masing, Lisbeth Horn",
+      "role": "Etendaja",
+      "mediaFolder": "bakhandid",
+      "externalLink": "https://tartu.postimees.ee/8018184/arvustus-suudlevad-bakhandid-emajoe-teebas",
+      "reviewLink": "https://tartu.postimees.ee/8018184/arvustus-suudlevad-bakhandid-emajoe-teebas",
+      "description": "Elina Masing ja Liisbeth Horn toovad Euripidese antiikse tragöödia nüüdisaegse etenduskunsti maailma. “Bakhandid” on osa Euroopa kultuuripealinn Tartu 2024 põhiprogrammist.\n\nElina Masing ja Liisbeth Horn toovad Euripidese antiikse tragöödia nüüdisaegse etenduskunsti maailma.\n\nεὐοῖ εὐοῖ εὐοῖ\nIoo,\nkuulake mind, kuulake häält,\nioo, bakhant, ioo, bakhant.\nIoo, ioo, jälle kutsun,\nma Seméle ja Zeusi poeg.\n(…)\n– Euripides “Bakhandid” (tlk Anne Lill)\n\nTeeba kuningas Pentheus keeldub uskumast, et tema tädipoeg Dionysos on Zeusist maailma sündinud ja üritab veinijumala kultust hävitada. Vastutasuks vallutab Dionysos Teeba naiste meeled, kes oma kodukolde juurest bakhanaalile lahkuvad. Järgnevad brutaalsed, orgiastilised pidustused, mis on määratud jõudma traagilise lõpplahenduseni. Lavastajad uurivad ühiskondliku eskapismi haripunkti: kui Vana-Kreekas pakkus vajalikku väljapääsu reaalsuse küüsist kultuse juht Dionysos, siis kes/mis asendab veinijumalat nüüd?"
+    },
+    {
+      "id": "mehetegu",
+      "year": 2024,
+      "title": "Mehe Tegu",
+      "medium": "Film",
+      "director": "Franz Malmsten",
+      "role": "Peaosa, Nora",
+      "description": "Karl ja tema värske tüdruksõber Nora sõidavad Karli suvilasse, et veeta seal romantiline nädalavahetus. Pliidi alla tule tegemine on aga Karlile võõras ning õhtu möödub poisi jaoks varjatud hirmus, et äkki tuleb ving tuppa. Nora veidrad terviserikked panevad Karli veel rohkem muretsema. Hommikul lööb Noral välja epilepsiahoog, peale mida ei ole tüdruk enam kontaktne. Karli suurim hirm on, et tema on Noraga juhtunus süüdi. Kartes vahele jääda, alustab ta valede ringi suvilas juhtunu kohta, öeldes, et Nora kukkus ning lõi pea ära. Haiglas diagnoositakse Noral ajuvähk. Valed on aga väljas ja Karl proovib teha kõik endast oleneva, et rumal vale päevavalgele ei tuleks. Nora ema näeb Karli luiskamises lootust ja üritab arste veenda, et Nora kukkumist suvilas tuleks rohkem uurida. Kui valed kasvavad üle pea, Nora välimus ähvardab haiguse tõttu muutuda ning olukorra tõsidus Karlile kohale jõuab, ei oska poiss muud teha, kui põgeneda.",
+      "mediaFolder": "mehetegu",
+      "externalLink": "https://www.efis.ee/film/21495"
+    },
+    {
+      "id": "embrace",
+      "year": 2024,
+      "title": "Embrace",
+      "medium": "Film",
+      "director": "Robin Marten Leppik",
+      "role": "Etendaja",
+      "mediaFolder": "embrace",
+      "externalLink": "https://www.efis.ee/en/film/21477",
+      "priority": 9
+    },
+    {
+      "id": "sinilind",
+      "year": 2023,
+      "title": "Sinilind",
+      "medium": "Teater",
+      "director": "Tõnis Veelmaa",
+      "role": "Etendaja",
+      "mediaFolder": "sinilind",
+      "description": "Lavastus toetub Belgia näitekirjaniku, Nobeli preemia laureaadi Maurice Maeterlincki samanimelisele näidendile \"Sinilind\" (\"L'Oiseau bleu\", 1908), mille teemad õnne ja iseenda otsimisest on ammendamatud ka enam kui 100 aastat hiljem. Kuigi tegemist on muinasjutuga, pole lavastus mõeldud ainult lastele.\n\nÕnn, unistused, ideaalid, eesmärgid ei eksisteeri \"lihtsalt niisama\" kuskil, vaid neid tuleb otsida, nende nimel pingutada ja edasi liikuda. Paradoksaalne on see, et alles siis, kui teeme kõik endast oleneva, võivad need asjad ilmneda meis endis – nagu oleks need kogu aeg olemas olnud. Mida kaugemale me liigume, seda lähemale me jõuame."
+    },
+    {
+      "id": "siilipoomine",
+      "year": 2024,
+      "title": "Valge Tüdruku debüütalbumi \"Emo G\" esitluskontsert",
+      "medium": "Teater",
+      "director": "Elina Soosaar ja Kärt kokkota",
+      "role": "Etendaja",
+      "mediaFolder": "siilipoomine",
+      "externalLink": "https://eeter.err.ee/1609352172/galerii-valge-tudruku-debuutalbumi-emo-g-esitluskontsert",
+      "description" : "Erinevate Tubade Klubis toimus Valge Tüdruku debüütalbumi \"Emo G\" esitlus. "
+    },
+    {
+      "id": "ulemiste",
+      "year": 2025,
+      "title": "Ülemiste",
+      "medium": "Reklaam",
+      "director": "Janar Aronija",
+      "role": "Peaosa",
+      "featured": true,
+      "mediaFolder": "ulemiste",
+      "externalLink": "https://vimeo.com/1066570653",
+      "priority": 10
+    },
+    {
+      "id": "onnelikesurnute",
+      "year": 2025,
+      "title": "Õnnelike Surnute Aed",
+      "medium": "Film",
+      "director": "Oskar Viirand",
+      "role": "Etendaja",
+      "description": "    Üks põnev ja õudne põgenemise vorm on see, kui inimene põgeneb oma pähe ja jääb sinna kinni.\n\n“Õnnelike surnute aed” on Viljandi kultuuriakadeemia 4. kursuse lavastajatudengi Oskar Viirandi diplomilavastus.\n\n    Kui mulle tundub, et mõne inimesega suheldes saan ma rohkem haiget, kui ma tol hetkel taluda suudan, siis ma tõesti põgenen.\n\nAustria kunstnik Friedensreich Hundertwasser lasi end matta oma \"Õnnelike surnute aeda\", tulbipuu alla, et see puu saaks tema elu edasi kanda. Elu keerdkäikudest hoolimata leidis Hundertwasser viisi, kuidas surm ei oleks lõpp, vaid uus algus, edasiminek, harmooniline ühinemine maailmaga. Meie lavastus \"Õnnelike surnute aed\" võtab selle nime ja mõtte – see on pilk inimese haprasse, aga visasse olemusse, räägib kontaktist, mis on kadunud, ja sellest, kuidas see uuesti leitakse; kindlustundest, mis haihtub, ja sellest, kuidas see tagasi võidetakse. Või kas võidetakse? Kas me julgeme uuesti alustada, edasi minna?\n\n    Vahepeal tasub mõelda, et kui te üks päev ära kaoksite, kas te siis oleksite selle igatsuse väärilised, mis teie lähedased teie puudumisel tunnevad?\n\nLavastus koosneb kahest eraldiseisvast struktuurist. Üks avab ennast kinolinal ja teine toimub laval. Kaks struktuuri täiendavad teineteist, uurides, kuidas kino ja teater koos toimivad.\n\n    „Ei ole olemas sõnu, mis kirjeldaksid seda, mis ma tahan edasi anda”\n    “E vola, vola, si sa, Sempre più in alto si va.”",
+      "mediaFolder": "onnelikesurnute",
+      "externalLink": "https://kultuur.err.ee/1609682300/tartus-esietenduv-onnelike-surnute-aed-poimib-kino-ja-teatri-uheks",
+      "priority": 8
+    },
+    {
+      "id": "kalju",
+      "year": 2024,
+      "title": "Kalju Komissaarovi Päev",
+      "medium": "Teater",
+      "director": "Berta Kelder ja Elle Viies",
+      "role": "Etendaja",
+      "mediaFolder": "kalju"
+    },
+    {
+      "id": "martin-kosseson",
+      "title": "Martin Kosseson",
+      "medium": "Fotograafia",
+      "photographer": "Martin Kosseson",
+      "mediaFolder": "martin-kosseson"
+    },
+    {
+      "id": "hannes-ruutel",
+      "title": "Mia Tohver / Hannes Rüütel",
+      "medium": "Fotograafia",
+      "photographer": "Mia Tohver, assistent Liisa-Lota Jõeleht",
+      "mediaFolder": "hannes-ruutel",
+      "externalLink": "https://www.instagram.com/hannesruutel/?hl=en"
+    },
+    {
+      "id": "ekvilibrist",
+      "title": "Ekvilibrist",
+      "medium": "Fotograafia",
+      "photographer": "Ekvilibrist",
+      "mediaFolder": "ekvilibrist",
+      "externalLink": "https://www.ekvilibrist.com/"
+
+    },
+    {
+      "id": "kaisa-nele",
+      "title": "Kaisa Nele Hendla",
+      "medium": "Fotograafia",
+      "photographer": "Kaisa Nele Hendla",
+      "mediaFolder": "kaisa-nele",
+      "externalLink": "https://cherrydeck.com/kaisanele"
+    }
+  ],
+  "contact": {
+    "email": "elina.soosaar@gmail.com",
+    "phone": "+372 55 647 825"
+  }
+}
