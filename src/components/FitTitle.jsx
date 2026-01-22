@@ -9,7 +9,6 @@ export default function FitTitle({
                                      className = "",
                                      maxPx = 30,
                                      minPx = 18,
-                                     step = 1,
                                      lineHeight = 1.1,
                                  }) {
     const elRef = useRef(null);
@@ -24,21 +23,35 @@ export default function FitTitle({
         let raf = 0;
 
         const fit = () => {
-            // Start big
-            let px = maxPx;
-            el.style.fontSize = `${px}px`;
-            el.style.lineHeight = String(lineHeight);
-
             const available = parent.clientHeight;
 
-            // If parent has no height, don't shrink
-            if (!available || available < 10) return;
-
-            // Shrink until it fits the parent
-            while (px > minPx && el.scrollHeight > available) {
-                px -= step;
-                el.style.fontSize = `${px}px`;
+            // If parent has no height, default to max.
+            if (!available || available < 10) {
+                el.style.fontSize = `${maxPx}px`;
+                el.style.lineHeight = String(lineHeight);
+                return;
             }
+
+            el.style.lineHeight = String(lineHeight);
+
+            // Binary search for the largest font size that fits.
+            let low = minPx;
+            let high = maxPx;
+            let best = minPx;
+
+            while (low <= high) {
+                const mid = Math.floor((low + high) / 2);
+                el.style.fontSize = `${mid}px`;
+
+                if (el.scrollHeight <= available) {
+                    best = mid;
+                    low = mid + 1;
+                } else {
+                    high = mid - 1;
+                }
+            }
+
+            el.style.fontSize = `${best}px`;
         };
 
         const onResize = () => {
@@ -49,15 +62,13 @@ export default function FitTitle({
         const ro = new ResizeObserver(onResize);
         ro.observe(parent);
 
-        window.addEventListener("resize", onResize);
         fit();
 
         return () => {
             cancelAnimationFrame(raf);
             ro.disconnect();
-            window.removeEventListener("resize", onResize);
         };
-    }, [text, maxPx, minPx, step, lineHeight]);
+    }, [text, maxPx, minPx, lineHeight]);
 
     return (
         <h2 ref={elRef} className={className}>
