@@ -80,7 +80,9 @@ const ProjectRow = ({ project, delay = 0 }) => {
                 <div
                     className="flex-1 min-w-0 h-full relative group bg-gray-50"
                     onMouseMove={handleMouseMove}
-                    onMouseLeave={() => { speedRef.current = 0; }}
+                    onMouseLeave={() => {
+                        speedRef.current = 0;
+                    }}
                 >
                     <div
                         ref={scrollRef}
@@ -120,39 +122,40 @@ const ProjectRow = ({ project, delay = 0 }) => {
                 </div>
 
                 {/* INFO PANEL */}
-
-                <div className="w-full md:w-[420px] flex-shrink-0 flex flex-col p-8 md:p-12 border-l border-gray-100 bg-white z-30">
-                    <div className="flex-1">
-                        <div className="flex items-center justify-between mb-8">
-            <span className="text-[10px] font-mono text-accent-front tracking-tighter uppercase font-semibold">
-                // {project.year}
-            </span>
-                            <span className="text-[8px] uppercase tracking-[0.4em] text-gray-300 font-medium">
-                {project.medium}
-            </span>
-                        </div>
-
-                        <h2 className="text-2xl md:text-3xl font-light tracking-tight leading-[1.1] mb-8 uppercase">
-                            {project.title}
-                        </h2>
-
-                        {project.role && (
-                            <div className="space-y-6 pt-8 border-t border-gray-100">
-                                <div>
-                                    <p className="text-[7px] uppercase tracking-[0.3em] text-gray-400 mb-1.5">
-                                        Roll
-                                    </p>
-                                    <p className="text-[12px] uppercase tracking-wider font-semibold text-gray-900">
-                                        {project.role}
-                                    </p>
-                                </div>
+                <div className="w-full md:w-[420px] flex-shrink-0 flex flex-col p-8 md:p-12 border-l border-gray-100 bg-white z-30 h-full">
+                    <div className="flex-1 flex flex-col justify-between overflow-hidden">
+                        <div>
+                            <div className="flex items-center justify-between mb-8">
+                                <span className="text-[10px] font-mono text-accent-front tracking-tighter uppercase font-semibold">
+                                    // {project.year}
+                                </span>
+                                <span className="text-[8px] uppercase tracking-[0.4em] text-gray-300 font-medium">
+                                    {project.medium}
+                                </span>
                             </div>
-                        )}
+
+                            <h2 className="text-2xl md:text-3xl font-light tracking-tight leading-[1.1] mb-8 uppercase">
+                                {project.title}
+                            </h2>
+
+                            {project.role && (
+                                <div className="space-y-6 pt-8 border-t border-gray-100">
+                                    <div>
+                                        <p className="text-[7px] uppercase tracking-[0.3em] text-gray-400 mb-1.5">
+                                            Roll
+                                        </p>
+                                        <p className="text-[12px] uppercase tracking-wider font-semibold text-gray-900">
+                                            {project.role}
+                                        </p>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
                     </div>
 
                     <button
                         onClick={() => setIsExpanded(!isExpanded)}
-                        className="text-left py-4 text-[8px] uppercase tracking-[0.5em] text-gray-300 hover:text-black transition-colors border-t border-gray-100 mt-auto"
+                        className="text-left py-4 text-[8px] uppercase tracking-[0.5em] text-gray-300 hover:text-black transition-colors border-t border-gray-100 flex-shrink-0"
                     >
                         Lisainfo {isExpanded ? '−' : '+'}
                     </button>
@@ -166,9 +169,9 @@ const ProjectRow = ({ project, delay = 0 }) => {
                         animate={{ opacity: 1, height: 'auto' }}
                         exit={{ opacity: 0, height: 0 }}
                         transition={{ duration: 0.3 }}
-                        className="overflow-hidden border-t border-gray-100 bg-white"
+                        className="overflow-visible border-t border-gray-100 bg-white"
                     >
-                        <div className="p-12 space-y-8 max-w-2xl">
+                        <div className="p-12 space-y-8">
                             {/* Director/Photographer */}
                             {(project.director || project.photographer) && (
                                 <div>
