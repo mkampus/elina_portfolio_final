@@ -61,7 +61,6 @@ const InFront = () => {
             {/* Header */}
             <header className="pt-8 md:pt-24 pb-6 md:pb-12 px-6 md:px-12 border-b border-gray-100 w-full bg-white z-40 sticky top-0">
                 <div className="max-w-[1920px] mx-auto flex flex-col md:flex-row justify-between items-start gap-12">
-
                     <div className="flex-1">
                         <h1 className="text-5xl md:text-[120px] font-light uppercase leading-none md:leading-none mb-1 m-0 p-0">
                             {infrontData.hero.name}
@@ -70,7 +69,6 @@ const InFront = () => {
                             {infrontData.hero.title}
                         </h2>
                     </div>
-
                 </div>
             </header>
 
@@ -135,7 +133,7 @@ const InFront = () => {
             <footer className="py-24 md:py-48 px-6 md:px-12 border-t border-gray-100 flex flex-col items-center">
                 <a
                     href={`mailto:${infrontData.contact.email}`}
-                    className="text-3xl md:text-9xl hover:text-accent-front transition-all underline underline-offset-[12px] md:underline-offset-[24px] font-light tracking-tighter uppercase decoration-[1px] break-all"
+                    className="text-3xl md:text-7xl hover:text-accent-front transition-all underline underline-offset-[12px] md:underline-offset-[24px] font-light tracking-tighter uppercase decoration-[1px] break-all"
                 >
                     Võta ühendust
                 </a>

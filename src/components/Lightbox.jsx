@@ -1,3 +1,4 @@
+// Lightbox.jsx
 import React, { useEffect, useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useModalState } from '../hooks/useModalState';
@@ -12,15 +13,15 @@ const Lightbox = ({ media, currentIndex, setCurrentIndex, project, onClose }) =>
         onClose();
     }, [setIsModalOpen, onClose]);
 
-    const next = useCallback((e) => {
-        e?.stopPropagation();
-        setCurrentIndex((currentIndex + 1) % media.length);
-    }, [currentIndex, media.length, setCurrentIndex]);
+    const next = useCallback(() => {
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % media.length);
+    }, [media.length, setCurrentIndex]);
 
-    const prev = useCallback((e) => {
-        e?.stopPropagation();
-        setCurrentIndex((currentIndex - 1 + media.length) % media.length);
-    }, [currentIndex, media.length, setCurrentIndex]);
+    const prev = useCallback(() => {
+        setCurrentIndex((prevIndex) =>
+            (prevIndex - 1 + media.length) % media.length
+        );
+    }, [media.length, setCurrentIndex]);
 
     useEffect(() => {
         const handleKeyDown = (e) => {
@@ -32,7 +33,7 @@ const Lightbox = ({ media, currentIndex, setCurrentIndex, project, onClose }) =>
         };
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
-    }, [currentIndex, media.length, next, prev, handleClose]);
+    }, [next, prev, handleClose]);
 
     if (!activeAsset || !project) return null;
 
@@ -48,9 +49,9 @@ const Lightbox = ({ media, currentIndex, setCurrentIndex, project, onClose }) =>
                 <motion.div
                     initial={{ x: 30, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
-                    className="order-2 md:order-2 flex-1 md:flex-[3] h-full p-12 md:p-16 flex flex-col justify-between bg-white border-l border-gray-100 z-50 overflow-y-auto"
+                    className="order-2 md:order-2 flex-1 md:flex-[3] h-full p-8 md:p-16 flex flex-col bg-white border-l border-gray-100 z-50"
                 >
-                    <div className="space-y-12">
+                    <div className="flex-1 overflow-y-auto space-y-12 pr-4">
                         <div className="space-y-4">
                             <span className="text-[9px] font-mono text-accent-front uppercase tracking-[0.3em]">
                                 Arhiiv
@@ -58,15 +59,23 @@ const Lightbox = ({ media, currentIndex, setCurrentIndex, project, onClose }) =>
                             <h2 className="text-5xl md:text-6xl font-light tracking-tighter uppercase leading-[0.85]">
                                 {project.title}
                             </h2>
-                            <p className="text-[10px] font-mono text-gray-400 uppercase tracking-widest">{project.year} // {project.medium}</p>
+                            <p className="text-[10px] font-mono text-gray-400 uppercase tracking-widest">
+                                {project.year} // {project.medium}
+                            </p>
                         </div>
 
-                        <div className="space-y-8 pt-8 border-t border-gray-100">
-                            <div>
-                                <p className="text-[8px] uppercase tracking-[0.4em] text-gray-400 mb-2">Roll</p>
-                                <p className="text-base uppercase tracking-wider font-medium text-gray-900">{project.role}</p>
+                        {project.role && (
+                            <div className="space-y-8 pt-8 border-t border-gray-100">
+                                <div>
+                                    <p className="text-[8px] uppercase tracking-[0.4em] text-gray-400 mb-2">
+                                        Roll
+                                    </p>
+                                    <p className="text-base uppercase tracking-wider font-medium text-gray-900">
+                                        {project.role}
+                                    </p>
+                                </div>
                             </div>
-                        </div>
+                        )}
 
                         <button
                             onClick={() => setShowDetails(!showDetails)}
@@ -97,23 +106,35 @@ const Lightbox = ({ media, currentIndex, setCurrentIndex, project, onClose }) =>
 
                                     {project.description && (
                                         <div>
-                                            <p className="text-[8px] uppercase tracking-[0.4em] text-gray-400 mb-2">Kirjeldus</p>
-                                            <p className="text-sm font-light text-gray-700 leading-relaxed">{project.description}</p>
+                                            <p className="text-[8px] uppercase tracking-[0.4em] text-gray-400 mb-2">
+                                                Kirjeldus
+                                            </p>
+                                            <p className="text-sm font-light text-gray-700 leading-relaxed">
+                                                {project.description}
+                                            </p>
                                         </div>
                                     )}
 
                                     {project.awards && project.awards.length > 0 && (
                                         <div>
-                                            <p className="text-[8px] uppercase tracking-[0.4em] text-gray-400 mb-2">Auhinnad</p>
+                                            <p className="text-[8px] uppercase tracking-[0.4em] text-gray-400 mb-2">
+                                                Auhinnad
+                                            </p>
                                             {project.awards.map((award, idx) => (
-                                                <p key={idx} className="text-sm text-gray-700 font-light">✦ {award}</p>
+                                                <p key={idx} className="text-sm text-gray-700 font-light">
+                                                    ✦ {award}
+                                                </p>
                                             ))}
                                         </div>
                                     )}
 
-                                    {(project.externalLink || project.driveFolder || project.reviewLink) && (
+                                    {(project.externalLink ||
+                                        project.driveFolder ||
+                                        project.reviewLink) && (
                                         <div>
-                                            <p className="text-[8px] uppercase tracking-[0.4em] text-gray-400 mb-2">Lingid</p>
+                                            <p className="text-[8px] uppercase tracking-[0.4em] text-gray-400 mb-2">
+                                                Lingid
+                                            </p>
                                             <div className="space-y-2">
                                                 {project.externalLink && (
                                                     <a
@@ -153,12 +174,27 @@ const Lightbox = ({ media, currentIndex, setCurrentIndex, project, onClose }) =>
                         </AnimatePresence>
                     </div>
 
-                    <div className="mt-20 flex justify-between items-center pt-8 border-t border-gray-100">
+                    <div className="mt-auto flex justify-between items-center pt-8 border-t border-gray-100">
                         <div className="flex gap-6 font-mono text-[9px]">
-                            <button onClick={prev} className="hover:text-accent-front transition-colors">EELM</button>
-                            <button onClick={next} className="hover:text-accent-front transition-colors">JÄRG</button>
+                            <button
+                                onClick={prev}
+                                className="hover:text-accent-front transition-colors"
+                            >
+                                EELM
+                            </button>
+                            <button
+                                onClick={next}
+                                className="hover:text-accent-front transition-colors"
+                            >
+                                JÄRG
+                            </button>
                         </div>
-                        <button onClick={handleClose} className="text-[9px] font-mono uppercase tracking-[0.3em] hover:text-accent-front">Sulge [x]</button>
+                        <button
+                            onClick={handleClose}
+                            className="text-[9px] font-mono uppercase tracking-[0.3em] hover:text-accent-front"
+                        >
+                            Sulge [x]
+                        </button>
                     </div>
                 </motion.div>
 
@@ -211,7 +247,8 @@ const Lightbox = ({ media, currentIndex, setCurrentIndex, project, onClose }) =>
                     </div>
 
                     <div className="absolute bottom-8 left-8 z-30 font-mono text-[9px] text-gray-300 tracking-[0.4em] pointer-events-none">
-                        {String(currentIndex + 1).padStart(2, '0')} / {String(media.length).padStart(2, '0')}
+                        {String(currentIndex + 1).padStart(2, '0')} /{' '}
+                        {String(media.length).padStart(2, '0')}
                     </div>
                 </div>
             </motion.div>

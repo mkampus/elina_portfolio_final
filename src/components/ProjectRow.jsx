@@ -1,3 +1,4 @@
+// ProjectRow.jsx
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useProjectMedia } from '../hooks/useProjectMedia';
@@ -109,9 +110,9 @@ const ProjectRow = ({ project, delay = 0 }) => {
                                 )}
 
                                 <div className="absolute bottom-6 left-0 right-0 flex justify-center opacity-0 group-hover/item:opacity-100 transition-all translate-y-2 group-hover/item:translate-y-0 duration-300">
-                  <span className="bg-white/90 backdrop-blur-sm px-3 py-1 text-[8px] uppercase tracking-[0.4em] font-mono text-black">
-                    Open_Slide
-                  </span>
+                                    <span className="bg-white/90 backdrop-blur-sm px-3 py-1 text-[8px] uppercase tracking-[0.4em] font-mono text-black">
+                                        Open_Slide
+                                    </span>
                                 </div>
                             </div>
                         ))}
@@ -122,26 +123,31 @@ const ProjectRow = ({ project, delay = 0 }) => {
                 <div className="w-full md:w-[420px] flex-shrink-0 flex flex-col p-8 md:p-12 border-l border-gray-100 bg-white z-30">
                     <div className="flex-1 overflow-y-auto">
                         <div className="flex items-center justify-between mb-8">
-              <span className="text-[10px] font-mono text-accent-front tracking-tighter uppercase font-semibold">
-                // {project.year}
-              </span>
+                            <span className="text-[10px] font-mono text-accent-front tracking-tighter uppercase font-semibold">
+                                // {project.year}
+                            </span>
                             <span className="text-[8px] uppercase tracking-[0.4em] text-gray-300 font-medium">
-                {project.medium}
-              </span>
+                                {project.medium}
+                            </span>
                         </div>
 
                         <h2 className="text-2xl md:text-3xl font-light tracking-tight leading-[1.1] mb-8 uppercase">
                             {project.title}
                         </h2>
 
-                        <div className="space-y-6 pt-8 border-t border-gray-100">
-                            <div>
-                                <p className="text-[7px] uppercase tracking-[0.3em] text-gray-400 mb-1.5">Roll</p>
-                                <p className="text-[12px] uppercase tracking-wider font-semibold text-gray-900">{project.role}</p>
+                        {project.role && (
+                            <div className="space-y-6 pt-8 border-t border-gray-100">
+                                <div>
+                                    <p className="text-[7px] uppercase tracking-[0.3em] text-gray-400 mb-1.5">
+                                        Roll
+                                    </p>
+                                    <p className="text-[12px] uppercase tracking-wider font-semibold text-gray-900">
+                                        {project.role}
+                                    </p>
+                                </div>
                             </div>
-                        </div>
+                        )}
                     </div>
-
 
                     <button
                         onClick={() => setIsExpanded(!isExpanded)}
@@ -151,7 +157,6 @@ const ProjectRow = ({ project, delay = 0 }) => {
                     </button>
                 </div>
             </div>
-
 
             <AnimatePresence>
                 {isExpanded && (
@@ -178,7 +183,9 @@ const ProjectRow = ({ project, delay = 0 }) => {
                             {/* Description */}
                             {project.description && (
                                 <div>
-                                    <p className="text-[8px] uppercase tracking-[0.4em] text-gray-400 mb-3">Kirjeldus</p>
+                                    <p className="text-[8px] uppercase tracking-[0.4em] text-gray-400 mb-3">
+                                        Kirjeldus
+                                    </p>
                                     <p className="text-sm font-light text-gray-700 leading-relaxed">
                                         {project.description}
                                     </p>
@@ -188,7 +195,9 @@ const ProjectRow = ({ project, delay = 0 }) => {
                             {/* Awards */}
                             {project.awards && project.awards.length > 0 && (
                                 <div>
-                                    <p className="text-[8px] uppercase tracking-[0.4em] text-gray-400 mb-3">Auhinnad</p>
+                                    <p className="text-[8px] uppercase tracking-[0.4em] text-gray-400 mb-3">
+                                        Auhinnad
+                                    </p>
                                     <div className="space-y-2">
                                         {project.awards.map((award, idx) => (
                                             <p key={idx} className="text-sm text-gray-700 font-light">
@@ -200,9 +209,13 @@ const ProjectRow = ({ project, delay = 0 }) => {
                             )}
 
                             {/* Links */}
-                            {(project.externalLink || project.driveFolder || project.reviewLink) && (
+                            {(project.externalLink ||
+                                project.driveFolder ||
+                                project.reviewLink) && (
                                 <div>
-                                    <p className="text-[8px] uppercase tracking-[0.4em] text-gray-400 mb-3">Lingid</p>
+                                    <p className="text-[8px] uppercase tracking-[0.4em] text-gray-400 mb-3">
+                                        Lingid
+                                    </p>
                                     <div className="space-y-2">
                                         {project.externalLink && (
                                             <a

@@ -101,7 +101,8 @@ const ProjectRowMobile = ({ project, delay = 0 }) => {
 
                             {/* Counter */}
                             <div className="absolute bottom-3 right-3 text-[10px] font-mono text-white bg-black/50 px-2 py-1 backdrop-blur-md">
-                                {String(currentIndex + 1).padStart(2, '0')} / {String(media.length).padStart(2, '0')}
+                                {String(currentIndex + 1).padStart(2, '0')} /{' '}
+                                {String(media.length).padStart(2, '0')}
                             </div>
                         </>
                     )}
@@ -126,9 +127,11 @@ const ProjectRowMobile = ({ project, delay = 0 }) => {
                 </div>
 
                 <div className="flex flex-col gap-0.5 border-l border-accent-front/30 pl-2">
-                    <p className="text-[9px] uppercase tracking-[0.1em] font-semibold text-gray-900">
-                        {project.role}
-                    </p>
+                    {project.role && (
+                        <p className="text-[9px] uppercase tracking-[0.1em] font-semibold text-gray-900">
+                            {project.role}
+                        </p>
+                    )}
                     <div className="flex gap-2 text-[9px] uppercase tracking-widest text-gray-500">
                         <span>{project.medium}</span>
                         {project.director && (
@@ -141,7 +144,10 @@ const ProjectRowMobile = ({ project, delay = 0 }) => {
                 </div>
 
                 {/* Description & Awards & Links */}
-                {(project.description || (project.awards && project.awards.length > 0) || project.externalLink || project.reviewLink) && (
+                {(project.description ||
+                    (project.awards && project.awards.length > 0) ||
+                    project.externalLink ||
+                    project.reviewLink) && (
                     <div className="pt-1">
                         <button
                             onClick={() => setIsExpanded(!isExpanded)}
@@ -162,21 +168,28 @@ const ProjectRowMobile = ({ project, delay = 0 }) => {
                                     </p>
                                 )}
 
-                                {project.awards && project.awards.length > 0 && (
-                                    <div>
-                                        <p className="text-[8px] uppercase tracking-[0.2em] text-gray-400 mb-1">
-                                            Auhinnad
-                                        </p>
-                                        {project.awards.map((award, idx) => (
-                                            <p key={idx} className="text-xs text-gray-600">
-                                                ★ {award}
+                                {project.awards &&
+                                    project.awards.length > 0 && (
+                                        <div>
+                                            <p className="text-[8px] uppercase tracking-[0.2em] text-gray-400 mb-1">
+                                                Auhinnad
                                             </p>
-                                        ))}
-                                    </div>
-                                )}
+                                            {project.awards.map(
+                                                (award, idx) => (
+                                                    <p
+                                                        key={idx}
+                                                        className="text-xs text-gray-600"
+                                                    >
+                                                        ★ {award}
+                                                    </p>
+                                                )
+                                            )}
+                                        </div>
+                                    )}
 
                                 {/* Links */}
-                                {(project.externalLink || project.reviewLink) && (
+                                {(project.externalLink ||
+                                    project.reviewLink) && (
                                     <div className="flex flex-wrap gap-3 pt-1 border-t border-gray-200">
                                         {project.externalLink && (
                                             <a
