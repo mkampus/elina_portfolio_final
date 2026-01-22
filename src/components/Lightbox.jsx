@@ -29,27 +29,32 @@ const Lightbox = ({ media, currentIndex, setCurrentIndex, project, onClose }) =>
         onClose();
     }, [setIsModalOpen, onClose]);
 
+    // Guard: only navigate if this lightbox is open
     const next = useCallback(() => {
+        if (currentIndex === null) return;
         setCurrentIndex((prevIndex) => (prevIndex + 1) % media.length);
-    }, [media.length, setCurrentIndex]);
+    }, [currentIndex, media.length, setCurrentIndex]);
 
     const prev = useCallback(() => {
+        if (currentIndex === null) return;
         setCurrentIndex((prevIndex) =>
             (prevIndex - 1 + media.length) % media.length
         );
-    }, [media.length, setCurrentIndex]);
+    }, [currentIndex, media.length, setCurrentIndex]);
 
+    // Guard: only listen if this lightbox is open
     useEffect(() => {
+        if (currentIndex === null) return;
+
         const handleKeyDown = (e) => {
             if (e.key === 'ArrowRight') next();
             if (e.key === 'ArrowLeft') prev();
-            if (e.key === 'Escape') {
-                handleClose();
-            }
+            if (e.key === 'Escape') handleClose();
         };
+
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
-    }, [next, prev, handleClose]);
+    }, [currentIndex, next, prev, handleClose]);
 
     if (!activeAsset || !project) return null;
 
@@ -205,7 +210,7 @@ const Lightbox = ({ media, currentIndex, setCurrentIndex, project, onClose }) =>
                             <span className="text-[9px] font-mono text-accent-front uppercase tracking-[0.3em]">
                                 Arhiiv
                             </span>
-                            <h2 className="text-2xl md:text-6xl font-light tracking-tighter uppercase leading-[0.85]">
+                            <h2 className="text-2xl md:text-6xl font-light tracking-tighter uppercase leading-[0.85] break-words">
                                 {project.title}
                             </h2>
                             <p className="text-[9px] md:text-[10px] font-mono text-gray-400 uppercase tracking-widest">
@@ -219,7 +224,7 @@ const Lightbox = ({ media, currentIndex, setCurrentIndex, project, onClose }) =>
                                     <p className="text-[7px] md:text-[8px] uppercase tracking-[0.4em] text-gray-400 mb-1 md:mb-2">
                                         Roll
                                     </p>
-                                    <p className="text-xs md:text-base uppercase tracking-wider font-medium text-gray-900">
+                                    <p className="text-xs md:text-base uppercase tracking-wider font-medium text-gray-900 break-words">
                                         {project.role}
                                     </p>
                                 </div>

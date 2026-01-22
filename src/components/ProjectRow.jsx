@@ -122,7 +122,7 @@ const ProjectRow = ({ project, delay = 0 }) => {
                 </div>
 
                 {/* INFO PANEL */}
-                <div className="w-full md:w-[420px] flex-shrink-0 flex flex-col p-8 md:p-12 border-l border-gray-100 bg-white z-30">
+                <div className="w-full md:w-[420px] min-w-0 flex-shrink-0 flex flex-col p-8 md:p-12 border-l border-gray-100 bg-white z-30">
                     {/* Content */}
                     <div className="flex-1">
                         <div className="flex items-center justify-between mb-8 gap-2">
