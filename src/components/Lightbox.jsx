@@ -44,7 +44,7 @@ const Lightbox = ({ media, currentIndex, setCurrentIndex, project, onClose }) =>
                 exit={{ opacity: 0 }}
                 className="fixed inset-0 z-[100] bg-white flex flex-col md:flex-row overflow-hidden"
             >
-
+                {/* Data Panel Right Side */}
                 <motion.div
                     initial={{ x: 30, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
@@ -52,9 +52,9 @@ const Lightbox = ({ media, currentIndex, setCurrentIndex, project, onClose }) =>
                 >
                     <div className="space-y-12">
                         <div className="space-y-4">
-              <span className="text-[9px] font-mono text-accent-front uppercase tracking-[0.3em]">
-                Arhiiv
-              </span>
+                            <span className="text-[9px] font-mono text-accent-front uppercase tracking-[0.3em]">
+                                Arhiiv
+                            </span>
                             <h2 className="text-5xl md:text-6xl font-light tracking-tighter uppercase leading-[0.85]">
                                 {project.title}
                             </h2>
@@ -68,7 +68,6 @@ const Lightbox = ({ media, currentIndex, setCurrentIndex, project, onClose }) =>
                             </div>
                         </div>
 
-                        {/* Production Notes Toggle */}
                         <button
                             onClick={() => setShowDetails(!showDetails)}
                             className="text-left py-4 text-[8px] uppercase tracking-[0.5em] text-gray-300 hover:text-black transition-colors border-t border-gray-100"
@@ -76,7 +75,6 @@ const Lightbox = ({ media, currentIndex, setCurrentIndex, project, onClose }) =>
                             Lisainfo {showDetails ? '−' : '+'}
                         </button>
 
-                        {/* Production Details - Always visible or expandable */}
                         <AnimatePresence>
                             {showDetails && (
                                 <motion.div
@@ -86,7 +84,6 @@ const Lightbox = ({ media, currentIndex, setCurrentIndex, project, onClose }) =>
                                     transition={{ duration: 0.3 }}
                                     className="overflow-hidden space-y-6"
                                 >
-                                    {/* Director/Photographer */}
                                     {(project.director || project.photographer) && (
                                         <div>
                                             <p className="text-[8px] uppercase tracking-[0.4em] text-gray-400 mb-2">
@@ -165,7 +162,7 @@ const Lightbox = ({ media, currentIndex, setCurrentIndex, project, onClose }) =>
                     </div>
                 </motion.div>
 
-                {/* 2. THE MEDIA AREA (Left Side) */}
+                {/* Media Area Left Side */}
                 <div className="order-1 md:order-1 flex-1 md:flex-[7] bg-gray-50 relative flex items-center justify-center overflow-hidden">
                     <div
                         className="absolute inset-0 z-10 cursor-zoom-out"
@@ -207,7 +204,8 @@ const Lightbox = ({ media, currentIndex, setCurrentIndex, project, onClose }) =>
                     <div className="absolute inset-y-0 right-0 w-24 z-30 flex items-center justify-center group/nav">
                         <button
                             onClick={next}
-                            className="opacity-40 hover:opacity-100 transition-opacity bg-white/90 backdrop-blur-sm px-3 py-2 text-[8px] font-mono uppercase tracking-widest cursor-w-resize"                        >
+                            className="opacity-40 hover:opacity-100 transition-opacity bg-white/90 backdrop-blur-sm px-3 py-2 text-[8px] font-mono uppercase tracking-widest cursor-e-resize"
+                        >
                             Järg
                         </button>
                     </div>
