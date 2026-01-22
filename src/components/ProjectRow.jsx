@@ -120,15 +120,16 @@ const ProjectRow = ({ project, delay = 0 }) => {
                 </div>
 
                 {/* INFO PANEL */}
+
                 <div className="w-full md:w-[420px] flex-shrink-0 flex flex-col p-8 md:p-12 border-l border-gray-100 bg-white z-30">
-                    <div className="flex-1 overflow-y-auto">
+                    <div className="flex-1">
                         <div className="flex items-center justify-between mb-8">
-                            <span className="text-[10px] font-mono text-accent-front tracking-tighter uppercase font-semibold">
-                                // {project.year}
-                            </span>
+            <span className="text-[10px] font-mono text-accent-front tracking-tighter uppercase font-semibold">
+                // {project.year}
+            </span>
                             <span className="text-[8px] uppercase tracking-[0.4em] text-gray-300 font-medium">
-                                {project.medium}
-                            </span>
+                {project.medium}
+            </span>
                         </div>
 
                         <h2 className="text-2xl md:text-3xl font-light tracking-tight leading-[1.1] mb-8 uppercase">

@@ -29,7 +29,7 @@ const InFront = () => {
                 groups['film ja reklaam'].push(project);
             } else if (project.medium === 'Teater') {
                 groups['teater'].push(project);
-            } else if (project.medium === 'Fotograafia') {
+            } else if (project.medium === 'Shoot') {
                 groups['shoots'].push(project);
             }
         });
@@ -59,13 +59,13 @@ const InFront = () => {
     return (
         <div className="min-h-screen bg-white w-full">
             {/* Header */}
-            <header className="pt-8 md:pt-24 pb-6 md:pb-12 px-6 md:px-12 border-b border-gray-100 w-full bg-white z-40 sticky top-0">
-                <div className="max-w-[1920px] mx-auto flex flex-col md:flex-row justify-between items-start gap-12">
+            <header className="py-1 md:pt-24 md:pb-12 px-3 md:px-12 border-b border-gray-100 w-full bg-white z-40 sticky top-0">
+                <div className="max-w-[1920px] mx-auto flex flex-col md:flex-row justify-between items-start gap-1 md:gap-12">
                     <div className="flex-1">
-                        <h1 className="text-5xl md:text-[120px] font-light uppercase leading-none md:leading-none mb-1 m-0 p-0">
+                        <h1 className="text-base sm:text-xl md:text-[120px] font-light uppercase leading-tight md:leading-none m-0 p-0">
                             {infrontData.hero.name}
                         </h1>
-                        <h2 className="text-2xl md:text-3xl font-light uppercase text-gray-400 tracking-wider m-0 p-0 ml-[11px]">
+                        <h2 className="text-[10px] sm:text-xs md:text-3xl font-light uppercase text-gray-400 tracking-wider m-0 p-0 ml-0.5 md:ml-[11px]">
                             {infrontData.hero.title}
                         </h2>
                     </div>
@@ -130,10 +130,10 @@ const InFront = () => {
             </main>
 
             {/* Footer */}
-            <footer className="py-24 md:py-48 px-6 md:px-12 border-t border-gray-100 flex flex-col items-center">
+            <footer className="py-6 md:py-48 px-6 md:px-12 border-t border-gray-100 flex flex-col items-center">
                 <a
                     href={`mailto:${infrontData.contact.email}`}
-                    className="text-3xl md:text-7xl hover:text-accent-front transition-all underline underline-offset-[12px] md:underline-offset-[24px] font-light tracking-tighter uppercase decoration-[1px] break-all"
+                    className="text-xs sm:text-lg md:text-7xl hover:text-accent-front transition-all underline underline-offset-[4px] md:underline-offset-[24px] font-light tracking-tighter uppercase decoration-[1px] break-all"
                 >
                     Võta ühendust
                 </a>
