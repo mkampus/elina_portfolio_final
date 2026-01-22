@@ -28,7 +28,7 @@ const ProjectRow = ({ project, delay = 0 }) => {
     }, [setIsModalOpen]);
 
     useEffect(() => {
-        const handlePopState = (event) => {
+        const handlePopState = () => {
             if (activeIndex !== null) {
                 window.history.pushState({ modalOpen: true }, null);
                 handleCloseLightbox();
@@ -142,7 +142,7 @@ const ProjectRow = ({ project, delay = 0 }) => {
                         </div>
                     </div>
 
-                    {/* EXPANDABLE BUTTON */}
+
                     <button
                         onClick={() => setIsExpanded(!isExpanded)}
                         className="text-left py-4 text-[8px] uppercase tracking-[0.5em] text-gray-300 hover:text-black transition-colors border-t border-gray-100 mt-auto"
@@ -152,7 +152,7 @@ const ProjectRow = ({ project, delay = 0 }) => {
                 </div>
             </div>
 
-            {/* EXPANDABLE DETAILS SECTION */}
+
             <AnimatePresence>
                 {isExpanded && (
                     <motion.div

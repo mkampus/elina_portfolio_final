@@ -44,7 +44,7 @@ const Lightbox = ({ media, currentIndex, setCurrentIndex, project, onClose }) =>
                 exit={{ opacity: 0 }}
                 className="fixed inset-0 z-[100] bg-white flex flex-col md:flex-row overflow-hidden"
             >
-                {/* 1. THE DATA PANEL (Right Side) */}
+
                 <motion.div
                     initial={{ x: 30, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}

@@ -55,7 +55,6 @@ const InFront = () => {
     }, []);
 
     const categories = Object.keys(groupedProjects);
-    const totalProjects = Object.values(groupedProjects).flat().length;
 
     return (
         <div className="min-h-screen bg-white w-full">
