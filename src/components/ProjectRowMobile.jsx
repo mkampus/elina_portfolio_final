@@ -1,11 +1,15 @@
 // ProjectRowMobile.jsx
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useProjectMedia } from '../hooks/useProjectMedia';
+import { useModalState } from '../hooks/useModalState';
+import Lightbox from './Lightbox';
 
 const ProjectRowMobile = ({ project, delay = 0 }) => {
+    const { setIsModalOpen } = useModalState();
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isExpanded, setIsExpanded] = useState(false);
+    const [activeIndex, setActiveIndex] = useState(null);
     const media = useProjectMedia(project?.mediaFolder);
     const touchStartX = useRef(null);
     const touchStartY = useRef(null);
@@ -19,6 +23,29 @@ const ProjectRowMobile = ({ project, delay = 0 }) => {
     const handlePrev = () => {
         setCurrentIndex((currentIndex - 1 + media.length) % media.length);
     };
+
+    const handleOpenLightbox = (idx) => {
+        setActiveIndex(idx);
+        setIsModalOpen(true);
+        window.history.pushState({ modalOpen: true }, null);
+    };
+
+    const handleCloseLightbox = useCallback(() => {
+        setActiveIndex(null);
+        setIsModalOpen(false);
+    }, [setIsModalOpen]);
+
+    useEffect(() => {
+        const handlePopState = () => {
+            if (activeIndex !== null) {
+                window.history.pushState({ modalOpen: true }, null);
+                handleCloseLightbox();
+            }
+        };
+
+        window.addEventListener('popstate', handlePopState);
+        return () => window.removeEventListener('popstate', handlePopState);
+    }, [activeIndex, handleCloseLightbox]);
 
     const handleTouchStart = (e) => {
         if (e.target.closest('video')) return;
@@ -51,16 +78,19 @@ const ProjectRowMobile = ({ project, delay = 0 }) => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay, duration: 0.5 }}
             viewport={{ once: true }}
-            className="border-b border-gray-100 pb-4 w-full"
+            className="border-b border-gray-100 pb-2 w-full"
         >
             {/* MEDIA CAROUSEL */}
             {media.length > 0 ? (
                 <div
-                    className="mb-3 relative touch-pan-y"
+                    className="mb-2 relative touch-pan-y"
                     onTouchStart={handleTouchStart}
                     onTouchEnd={handleTouchEnd}
                 >
-                    <div className="w-full aspect-[4/3] overflow-hidden flex items-center justify-center bg-white">
+                    <div
+                        className="w-full h-56 overflow-hidden flex items-center justify-center bg-white cursor-zoom-in"
+                        onClick={() => handleOpenLightbox(currentIndex)}
+                    >
                         {currentMedia?.type === 'video' ? (
                             <video
                                 src={currentMedia.src}
@@ -83,8 +113,11 @@ const ProjectRowMobile = ({ project, delay = 0 }) => {
                         <>
                             {/* Left Arrow */}
                             <button
-                                onClick={handlePrev}
-                                className="absolute left-3 top-1/2 -translate-y-1/2 z-20 p-2 bg-white/20 hover:bg-white/40 backdrop-blur-sm text-white rounded transition-all"
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    handlePrev();
+                                }}
+                                className="absolute left-2 top-1/2 -translate-y-1/2 z-20 p-1.5 bg-white/20 hover:bg-white/40 backdrop-blur-sm text-white rounded transition-all text-lg"
                                 aria-label="Previous"
                             >
                                 ‹
@@ -92,15 +125,18 @@ const ProjectRowMobile = ({ project, delay = 0 }) => {
 
                             {/* Right Arrow */}
                             <button
-                                onClick={handleNext}
-                                className="absolute right-3 top-1/2 -translate-y-1/2 z-20 p-2 bg-white/20 hover:bg-white/40 backdrop-blur-sm text-white rounded transition-all"
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleNext();
+                                }}
+                                className="absolute right-2 top-1/2 -translate-y-1/2 z-20 p-1.5 bg-white/20 hover:bg-white/40 backdrop-blur-sm text-white rounded transition-all text-lg"
                                 aria-label="Next"
                             >
                                 ›
                             </button>
 
                             {/* Counter */}
-                            <div className="absolute bottom-3 right-3 text-[10px] font-mono text-white bg-black/50 px-2 py-1 backdrop-blur-md">
+                            <div className="absolute bottom-2 right-2 text-[9px] font-mono text-white bg-black/50 px-1.5 py-0.5 backdrop-blur-md">
                                 {String(currentIndex + 1).padStart(2, '0')} /{' '}
                                 {String(media.length).padStart(2, '0')}
                             </div>
@@ -108,7 +144,7 @@ const ProjectRowMobile = ({ project, delay = 0 }) => {
                     )}
                 </div>
             ) : (
-                <div className="w-full aspect-[4/3] bg-white mb-3 flex items-center justify-center">
+                <div className="w-full h-56 bg-white mb-2 flex items-center justify-center">
                     <span className="text-[10px] font-mono text-gray-400 uppercase tracking-widest">
                         Meedia puudub
                     </span>
@@ -116,23 +152,23 @@ const ProjectRowMobile = ({ project, delay = 0 }) => {
             )}
 
             {/* INFO SECTION */}
-            <div className="px-0 space-y-3">
+            <div className="px-0 space-y-1.5">
                 <div className="flex justify-between items-baseline gap-2">
-                    <h2 className="text-xl font-light tracking-tight leading-none uppercase">
+                    <h2 className="text-base font-light tracking-tight leading-none uppercase">
                         {project.title}
                     </h2>
-                    <span className="text-[9px] font-mono text-accent-front shrink-0">
+                    <span className="text-[8px] font-mono text-accent-front shrink-0">
                         {project.year}
                     </span>
                 </div>
 
                 <div className="flex flex-col gap-0.5 border-l border-accent-front/30 pl-2">
                     {project.role && (
-                        <p className="text-[9px] uppercase tracking-[0.1em] font-semibold text-gray-900">
+                        <p className="text-[8px] uppercase tracking-[0.1em] font-semibold text-gray-900">
                             {project.role}
                         </p>
                     )}
-                    <div className="flex gap-2 text-[9px] uppercase tracking-widest text-gray-500">
+                    <div className="flex gap-1 text-[8px] uppercase tracking-widest text-gray-500">
                         <span>{project.medium}</span>
                         {project.director && (
                             <>
@@ -148,10 +184,10 @@ const ProjectRowMobile = ({ project, delay = 0 }) => {
                     (project.awards && project.awards.length > 0) ||
                     project.externalLink ||
                     project.reviewLink) && (
-                    <div className="pt-1">
+                    <div className="pt-0.5">
                         <button
                             onClick={() => setIsExpanded(!isExpanded)}
-                            className="text-[8px] uppercase tracking-[0.3em] text-gray-400 hover:text-black transition-colors"
+                            className="text-[7px] uppercase tracking-[0.3em] text-gray-400 hover:text-black transition-colors"
                         >
                             {isExpanded ? 'Peida −' : 'Loe +'}
                         </button>
@@ -160,10 +196,10 @@ const ProjectRowMobile = ({ project, delay = 0 }) => {
                             <motion.div
                                 initial={{ opacity: 0, height: 0 }}
                                 animate={{ opacity: 1, height: 'auto' }}
-                                className="pt-2 space-y-2"
+                                className="pt-1 space-y-1.5"
                             >
                                 {project.description && (
-                                    <p className="text-xs text-gray-600 font-light leading-relaxed">
+                                    <p className="text-[7px] text-gray-600 font-light leading-tight">
                                         {project.description}
                                     </p>
                                 )}
@@ -171,14 +207,14 @@ const ProjectRowMobile = ({ project, delay = 0 }) => {
                                 {project.awards &&
                                     project.awards.length > 0 && (
                                         <div>
-                                            <p className="text-[8px] uppercase tracking-[0.2em] text-gray-400 mb-1">
+                                            <p className="text-[7px] uppercase tracking-[0.2em] text-gray-400 mb-0.5">
                                                 Auhinnad
                                             </p>
                                             {project.awards.map(
                                                 (award, idx) => (
                                                     <p
                                                         key={idx}
-                                                        className="text-xs text-gray-600"
+                                                        className="text-[7px] text-gray-600"
                                                     >
                                                         ★ {award}
                                                     </p>
@@ -190,13 +226,13 @@ const ProjectRowMobile = ({ project, delay = 0 }) => {
                                 {/* Links */}
                                 {(project.externalLink ||
                                     project.reviewLink) && (
-                                    <div className="flex flex-wrap gap-3 pt-1 border-t border-gray-200">
+                                    <div className="flex flex-wrap gap-2 pt-0.5 border-t border-gray-200">
                                         {project.externalLink && (
                                             <a
                                                 href={project.externalLink}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
-                                                className="text-xs border-b border-gray-300 hover:border-black pb-0.5 transition-colors"
+                                                className="text-[7px] border-b border-gray-300 hover:border-black pb-0 transition-colors"
                                             >
                                                 Info →
                                             </a>
@@ -206,7 +242,7 @@ const ProjectRowMobile = ({ project, delay = 0 }) => {
                                                 href={project.reviewLink}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
-                                                className="text-xs border-b border-gray-300 hover:border-black pb-0.5 transition-colors"
+                                                className="text-[7px] border-b border-gray-300 hover:border-black pb-0 transition-colors"
                                             >
                                                 Arvustus →
                                             </a>
@@ -218,6 +254,15 @@ const ProjectRowMobile = ({ project, delay = 0 }) => {
                     </div>
                 )}
             </div>
+
+            {/* LIGHTBOX MODAL */}
+            <Lightbox
+                media={media}
+                currentIndex={activeIndex}
+                setCurrentIndex={setActiveIndex}
+                project={project}
+                onClose={() => handleCloseLightbox()}
+            />
         </motion.div>
     );
 };

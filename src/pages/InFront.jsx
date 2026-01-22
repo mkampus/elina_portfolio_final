@@ -5,15 +5,34 @@ import ProjectRow from '../components/ProjectRow';
 import ProjectRowMobile from '../components/ProjectRowMobile';
 
 const InFront = () => {
-    const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+    const checkIsMobile = () => {
+        const isSmallWidth = window.innerWidth < 768;
+        const isShortHeight = window.innerHeight < 500;
+        return isSmallWidth || isShortHeight;
+    };
+
+    const [isMobile, setIsMobile] = useState(checkIsMobile());
+    const [isLandscape, setIsLandscape] = useState(
+        window.matchMedia('(orientation: landscape)').matches
+    );
 
     useEffect(() => {
         const handleResize = () => {
-            setIsMobile(window.innerWidth < 768);
+            setIsMobile(checkIsMobile());
+        };
+
+        const mediaQuery = window.matchMedia('(orientation: landscape)');
+        const handleOrientationChange = (e) => {
+            setIsLandscape(e.matches);
         };
 
         window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
+        mediaQuery.addEventListener('change', handleOrientationChange);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+            mediaQuery.removeEventListener('change', handleOrientationChange);
+        };
     }, []);
 
     // Group projects by category
@@ -56,26 +75,50 @@ const InFront = () => {
 
     const categories = Object.keys(groupedProjects);
 
+    const isLandscapeMobile = isLandscape && isMobile;
+
     return (
         <div className="min-h-screen bg-white w-full">
-            {/* Header */}
-            <header className="py-1 md:pt-24 md:pb-12 px-3 md:px-12 border-b border-gray-100 w-full bg-white z-40 sticky top-0">
+            {/* Header - responsive, compact in landscape */}
+            <header
+                className={`border-b border-gray-100 w-full bg-white z-40 sticky top-0 ${
+                    isLandscapeMobile
+                        ? 'py-2 px-6'
+                        : 'py-1 md:pt-24 md:pb-12 px-3 md:px-12'
+                }`}
+            >
                 <div className="max-w-[1920px] mx-auto flex flex-col md:flex-row justify-between items-start gap-1 md:gap-12">
                     <div className="flex-1">
-                        <h1 className="text-base sm:text-xl md:text-[120px] font-light uppercase leading-tight md:leading-none m-0 p-0">
+                        <h1
+                            className={`font-light uppercase m-0 p-0 ${
+                                isLandscapeMobile
+                                    ? 'text-lg leading-tight'
+                                    : 'text-base sm:text-xl md:text-[120px] md:leading-none mb-1'
+                            }`}
+                        >
                             {infrontData.hero.name}
                         </h1>
-                        <h2 className="text-[10px] sm:text-xs md:text-3xl font-light uppercase text-gray-400 tracking-wider m-0 p-0 ml-0.5 md:ml-[11px]">
-                            {infrontData.hero.title}
-                        </h2>
+                        {!isLandscapeMobile && (
+                            <h2
+                                className="text-[10px] sm:text-xs md:text-3xl font-light uppercase text-gray-400 tracking-wider m-0 p-0 ml-0.5 md:ml-[11px]"
+                            >
+                                {infrontData.hero.title}
+                            </h2>
+                        )}
                     </div>
                 </div>
             </header>
 
             <main className="w-full">
                 {isMobile ? (
-                    // MOBILE VIEW
-                    <div className="px-6 py-2 max-w-[600px] mx-auto">
+                    // MOBILE VIEW - full width in landscape
+                    <div
+                        className={`py-2 mx-auto ${
+                            isLandscapeMobile
+                                ? 'w-full px-6 max-w-full'
+                                : 'px-6 max-w-[600px]'
+                        }`}
+                    >
                         {categories.map((category) => (
                             <div key={category} className="mb-6">
                                 {/* Category Header */}

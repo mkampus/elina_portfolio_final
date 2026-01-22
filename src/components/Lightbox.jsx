@@ -5,8 +5,24 @@ import { useModalState } from '../hooks/useModalState';
 
 const Lightbox = ({ media, currentIndex, setCurrentIndex, project, onClose }) => {
     const { setIsModalOpen } = useModalState();
-    const [showDetails, setShowDetails] = useState(true);
+
+    const checkIsMobile = () => {
+        const isSmallWidth = window.innerWidth < 768;
+        const isShortHeight = window.innerHeight < 500;
+        return isSmallWidth || isShortHeight;
+    };
+
+    const [isMobile, setIsMobile] = useState(checkIsMobile());
     const activeAsset = media[currentIndex];
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(checkIsMobile());
+        };
+
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     const handleClose = useCallback(() => {
         setIsModalOpen(false);
@@ -37,6 +53,85 @@ const Lightbox = ({ media, currentIndex, setCurrentIndex, project, onClose }) =>
 
     if (!activeAsset || !project) return null;
 
+    // Mobile-only fullscreen image view
+    if (isMobile) {
+        return (
+            <AnimatePresence>
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="fixed inset-0 z-[100] bg-black flex items-center justify-center overflow-hidden"
+                    onClick={handleClose}
+                >
+                    <motion.div
+                        key={currentIndex}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        className="w-full h-full flex items-center justify-center p-2"
+                    >
+                        <div className="w-full h-full flex items-center justify-center" onClick={(e) => e.stopPropagation()}>
+                            {activeAsset.type === 'video' ? (
+                                <video
+                                    src={activeAsset.src}
+                                    controls
+                                    autoPlay
+                                    className="w-full h-full object-contain"
+                                    playsInline
+                                />
+                            ) : (
+                                <img
+                                    src={activeAsset.src}
+                                    alt=""
+                                    className="w-full h-full object-contain"
+                                />
+                            )}
+                        </div>
+                    </motion.div>
+
+                    {/* Navigation arrows */}
+                    {media.length > 1 && (
+                        <>
+                            <button
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    prev();
+                                }}
+                                className="absolute left-3 top-1/2 -translate-y-1/2 z-30 p-2 bg-white/20 hover:bg-white/40 backdrop-blur-sm text-white rounded text-2xl"
+                            >
+                                ‹
+                            </button>
+                            <button
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    next();
+                                }}
+                                className="absolute right-3 top-1/2 -translate-y-1/2 z-30 p-2 bg-white/20 hover:bg-white/40 backdrop-blur-sm text-white rounded text-2xl"
+                            >
+                                ›
+                            </button>
+                        </>
+                    )}
+
+                    {/* Counter */}
+                    <div className="absolute bottom-4 right-4 z-30 font-mono text-sm text-white bg-black/50 px-3 py-2 backdrop-blur-md">
+                        {String(currentIndex + 1).padStart(2, '0')} /{' '}
+                        {String(media.length).padStart(2, '0')}
+                    </div>
+
+                    {/* Close button */}
+                    <button
+                        onClick={handleClose}
+                        className="absolute top-4 right-4 z-30 text-white text-3xl font-light hover:opacity-70 transition-opacity"
+                    >
+                        ✕
+                    </button>
+                </motion.div>
+            </AnimatePresence>
+        );
+    }
+
+    // Desktop view with info panel
     return (
         <AnimatePresence>
             <motion.div
@@ -99,13 +194,13 @@ const Lightbox = ({ media, currentIndex, setCurrentIndex, project, onClose }) =>
                     </div>
                 </div>
 
-                {/* Data Panel Right Side */}
+                {/* Data Panel Right Side - Desktop only */}
                 <motion.div
                     initial={{ x: 30, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
                     className="order-2 flex-1 md:flex-[3] md:h-full p-4 md:p-16 flex flex-col bg-white border-l border-gray-100 z-50 overflow-hidden"
                 >
-                    <div className="flex-1 overflow-y-auto space-y-6 md:space-y-12">
+                    <div className="flex-1 overflow-y-auto space-y-6 md:space-y-12 no-scrollbar pr-2">
                         <div className="space-y-2 md:space-y-4">
                             <span className="text-[9px] font-mono text-accent-front uppercase tracking-[0.3em]">
                                 Arhiiv
@@ -131,116 +226,71 @@ const Lightbox = ({ media, currentIndex, setCurrentIndex, project, onClose }) =>
                             </div>
                         )}
 
-                        <button
-                            onClick={() => setShowDetails(!showDetails)}
-                            className="text-left py-2 md:py-4 text-[7px] md:text-[8px] uppercase tracking-[0.5em] text-gray-300 hover:text-black transition-colors border-t border-gray-100"
-                        >
-                            Lisainfo {showDetails ? '−' : '+'}
-                        </button>
+                        {project.description && (
+                            <div>
+                                <p className="text-[7px] md:text-[8px] uppercase tracking-[0.4em] text-gray-400 mb-1 md:mb-2">
+                                    Kirjeldus
+                                </p>
+                                <p className="text-xs md:text-sm font-light text-gray-700 leading-relaxed line-clamp-3 md:line-clamp-none">
+                                    {project.description}
+                                </p>
+                            </div>
+                        )}
 
-                        <AnimatePresence>
-                            {showDetails && (
-                                <motion.div
-                                    initial={{ opacity: 0, height: 0 }}
-                                    animate={{ opacity: 1, height: 'auto' }}
-                                    exit={{ opacity: 0, height: 0 }}
-                                    transition={{ duration: 0.3 }}
-                                    className="overflow-hidden space-y-3 md:space-y-6"
-                                >
-                                    {(project.director || project.photographer) && (
-                                        <div>
-                                            <p className="text-[7px] md:text-[8px] uppercase tracking-[0.4em] text-gray-400 mb-1 md:mb-2">
-                                                {project.director
-                                                    ? 'Režissöör'
-                                                    : 'Fotograaf'}
-                                            </p>
-                                            <p className="text-xs md:text-sm font-light text-gray-700">
-                                                {project.director ||
-                                                    project.photographer}
-                                            </p>
-                                        </div>
+                        {project.awards && project.awards.length > 0 && (
+                            <div>
+                                <p className="text-[7px] md:text-[8px] uppercase tracking-[0.4em] text-gray-400 mb-1 md:mb-2">
+                                    Auhinnad
+                                </p>
+                                {project.awards.map((award, idx) => (
+                                    <p key={idx} className="text-xs md:text-sm text-gray-700 font-light">
+                                        ✦ {award}
+                                    </p>
+                                ))}
+                            </div>
+                        )}
+
+                        {(project.externalLink ||
+                            project.driveFolder ||
+                            project.reviewLink) && (
+                            <div>
+                                <p className="text-[7px] md:text-[8px] uppercase tracking-[0.4em] text-gray-400 mb-1 md:mb-2">
+                                    Lingid
+                                </p>
+                                <div className="space-y-1 md:space-y-2">
+                                    {project.externalLink && (
+                                        <a
+                                            href={project.externalLink}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="block text-xs md:text-sm text-gray-900 hover:text-gray-600 font-light underline"
+                                        >
+                                            Info →
+                                        </a>
                                     )}
-
-                                    {project.description && (
-                                        <div>
-                                            <p className="text-[7px] md:text-[8px] uppercase tracking-[0.4em] text-gray-400 mb-1 md:mb-2">
-                                                Kirjeldus
-                                            </p>
-                                            <p className="text-xs md:text-sm font-light text-gray-700 leading-relaxed line-clamp-3 md:line-clamp-none">
-                                                {project.description}
-                                            </p>
-                                        </div>
+                                    {project.driveFolder && (
+                                        <a
+                                            href={project.driveFolder}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="block text-xs md:text-sm text-gray-900 hover:text-gray-600 font-light underline"
+                                        >
+                                            Drive →
+                                        </a>
                                     )}
-
-                                    {project.awards &&
-                                        project.awards.length > 0 && (
-                                            <div>
-                                                <p className="text-[7px] md:text-[8px] uppercase tracking-[0.4em] text-gray-400 mb-1 md:mb-2">
-                                                    Auhinnad
-                                                </p>
-                                                {project.awards.map(
-                                                    (award, idx) => (
-                                                        <p
-                                                            key={idx}
-                                                            className="text-xs md:text-sm text-gray-700 font-light"
-                                                        >
-                                                            ✦ {award}
-                                                        </p>
-                                                    )
-                                                )}
-                                            </div>
-                                        )}
-
-                                    {(project.externalLink ||
-                                        project.driveFolder ||
-                                        project.reviewLink) && (
-                                        <div>
-                                            <p className="text-[7px] md:text-[8px] uppercase tracking-[0.4em] text-gray-400 mb-1 md:mb-2">
-                                                Lingid
-                                            </p>
-                                            <div className="space-y-1 md:space-y-2">
-                                                {project.externalLink && (
-                                                    <a
-                                                        href={
-                                                            project.externalLink
-                                                        }
-                                                        target="_blank"
-                                                        rel="noopener noreferrer"
-                                                        className="block text-xs md:text-sm text-gray-900 hover:text-gray-600 font-light underline"
-                                                    >
-                                                        Info →
-                                                    </a>
-                                                )}
-                                                {project.driveFolder && (
-                                                    <a
-                                                        href={
-                                                            project.driveFolder
-                                                        }
-                                                        target="_blank"
-                                                        rel="noopener noreferrer"
-                                                        className="block text-xs md:text-sm text-gray-900 hover:text-gray-600 font-light underline"
-                                                    >
-                                                        Drive →
-                                                    </a>
-                                                )}
-                                                {project.reviewLink && (
-                                                    <a
-                                                        href={
-                                                            project.reviewLink
-                                                        }
-                                                        target="_blank"
-                                                        rel="noopener noreferrer"
-                                                        className="block text-xs md:text-sm text-gray-900 hover:text-gray-600 font-light underline"
-                                                    >
-                                                        Arvustus →
-                                                    </a>
-                                                )}
-                                            </div>
-                                        </div>
+                                    {project.reviewLink && (
+                                        <a
+                                            href={project.reviewLink}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="block text-xs md:text-sm text-gray-900 hover:text-gray-600 font-light underline"
+                                        >
+                                            Arvustus →
+                                        </a>
                                     )}
-                                </motion.div>
-                            )}
-                        </AnimatePresence>
+                                </div>
+                            </div>
+                        )}
                     </div>
 
                     <div className="mt-auto flex justify-between items-center pt-4 md:pt-8 border-t border-gray-100 text-[8px] md:text-[9px]">
