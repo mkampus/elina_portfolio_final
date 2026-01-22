@@ -51,17 +51,16 @@ const ProjectRowMobile = ({ project, delay = 0 }) => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay, duration: 0.5 }}
             viewport={{ once: true }}
-            className="border-b border-gray-100 pb-12 w-full"
+            className="border-b border-gray-100 pb-4 w-full"
         >
             {/* MEDIA CAROUSEL */}
             {media.length > 0 ? (
                 <div
-                    className="mb-6 bg-gray-50 relative touch-pan-y"
+                    className="mb-3 relative touch-pan-y"
                     onTouchStart={handleTouchStart}
                     onTouchEnd={handleTouchEnd}
                 >
-                    {/* Aspect ratio 4/3 better fits portrait/vertical images on mobile */}
-                    <div className="w-full aspect-[4/3] overflow-hidden flex items-center justify-center bg-gray-100">
+                    <div className="w-full aspect-[4/3] overflow-hidden flex items-center justify-center bg-white">
                         {currentMedia?.type === 'video' ? (
                             <video
                                 src={currentMedia.src}
@@ -74,7 +73,7 @@ const ProjectRowMobile = ({ project, delay = 0 }) => {
                             <img
                                 src={currentMedia.src}
                                 alt={project.title}
-                                className="w-full h-full object-cover"
+                                className="w-full h-full object-contain"
                             />
                         )}
                     </div>
@@ -82,16 +81,23 @@ const ProjectRowMobile = ({ project, delay = 0 }) => {
                     {/* Navigation Click Zones */}
                     {media.length > 1 && (
                         <>
+                            {/* Left Arrow */}
                             <button
                                 onClick={handlePrev}
-                                className="absolute left-0 top-0 bottom-0 w-[15%] z-10"
+                                className="absolute left-3 top-1/2 -translate-y-1/2 z-20 p-2 bg-white/20 hover:bg-white/40 backdrop-blur-sm text-white rounded transition-all"
                                 aria-label="Previous"
-                            />
+                            >
+                                ‹
+                            </button>
+
+                            {/* Right Arrow */}
                             <button
                                 onClick={handleNext}
-                                className="absolute right-0 top-0 bottom-0 w-[15%] z-10"
+                                className="absolute right-3 top-1/2 -translate-y-1/2 z-20 p-2 bg-white/20 hover:bg-white/40 backdrop-blur-sm text-white rounded transition-all"
                                 aria-label="Next"
-                            />
+                            >
+                                ›
+                            </button>
 
                             {/* Counter */}
                             <div className="absolute bottom-3 right-3 text-[10px] font-mono text-white bg-black/50 px-2 py-1 backdrop-blur-md">
@@ -101,7 +107,7 @@ const ProjectRowMobile = ({ project, delay = 0 }) => {
                     )}
                 </div>
             ) : (
-                <div className="w-full aspect-[4/3] bg-gray-50 mb-6 flex items-center justify-center">
+                <div className="w-full aspect-[4/3] bg-white mb-3 flex items-center justify-center">
                     <span className="text-[10px] font-mono text-gray-400 uppercase tracking-widest">
                         Meedia puudub
                     </span>
@@ -109,21 +115,21 @@ const ProjectRowMobile = ({ project, delay = 0 }) => {
             )}
 
             {/* INFO SECTION */}
-            <div className="px-1 space-y-5">
-                <div className="flex justify-between items-baseline">
-                    <h2 className="text-2xl font-light tracking-tight leading-none uppercase">
+            <div className="px-0 space-y-3">
+                <div className="flex justify-between items-baseline gap-2">
+                    <h2 className="text-xl font-light tracking-tight leading-none uppercase">
                         {project.title}
                     </h2>
-                    <span className="text-[10px] font-mono text-accent-front shrink-0 ml-4">
+                    <span className="text-[9px] font-mono text-accent-front shrink-0">
                         {project.year}
                     </span>
                 </div>
 
-                <div className="flex flex-col gap-1 border-l border-accent-front/30 pl-3">
-                    <p className="text-[10px] uppercase tracking-[0.2em] font-semibold text-gray-900">
+                <div className="flex flex-col gap-0.5 border-l border-accent-front/30 pl-2">
+                    <p className="text-[9px] uppercase tracking-[0.1em] font-semibold text-gray-900">
                         {project.role}
                     </p>
-                    <div className="flex gap-2 text-[10px] uppercase tracking-widest text-gray-500">
+                    <div className="flex gap-2 text-[9px] uppercase tracking-widest text-gray-500">
                         <span>{project.medium}</span>
                         {project.director && (
                             <>
@@ -136,48 +142,48 @@ const ProjectRowMobile = ({ project, delay = 0 }) => {
 
                 {/* Description & Awards & Links */}
                 {(project.description || (project.awards && project.awards.length > 0) || project.externalLink || project.reviewLink) && (
-                    <div className="pt-2">
+                    <div className="pt-1">
                         <button
                             onClick={() => setIsExpanded(!isExpanded)}
-                            className="text-[9px] uppercase tracking-[0.3em] text-gray-400 hover:text-black transition-colors"
+                            className="text-[8px] uppercase tracking-[0.3em] text-gray-400 hover:text-black transition-colors"
                         >
-                            {isExpanded ? 'Peida info −' : 'Loe lisaks +'}
+                            {isExpanded ? 'Peida −' : 'Loe +'}
                         </button>
 
                         {isExpanded && (
                             <motion.div
                                 initial={{ opacity: 0, height: 0 }}
                                 animate={{ opacity: 1, height: 'auto' }}
-                                className="pt-4 space-y-4"
+                                className="pt-2 space-y-2"
                             >
                                 {project.description && (
-                                    <p className="text-sm text-gray-600 font-light leading-relaxed">
+                                    <p className="text-xs text-gray-600 font-light leading-relaxed">
                                         {project.description}
                                     </p>
                                 )}
 
                                 {project.awards && project.awards.length > 0 && (
                                     <div>
-                                        <p className="text-[9px] uppercase tracking-[0.2em] text-gray-400 mb-2">
+                                        <p className="text-[8px] uppercase tracking-[0.2em] text-gray-400 mb-1">
                                             Auhinnad
                                         </p>
                                         {project.awards.map((award, idx) => (
-                                            <p key={idx} className="text-sm text-gray-600 italic">
+                                            <p key={idx} className="text-xs text-gray-600">
                                                 ★ {award}
                                             </p>
                                         ))}
                                     </div>
                                 )}
 
-                                {/* Links - Inside expandable section */}
+                                {/* Links */}
                                 {(project.externalLink || project.reviewLink) && (
-                                    <div className="flex flex-wrap gap-4 pt-2 border-t border-gray-200">
+                                    <div className="flex flex-wrap gap-3 pt-1 border-t border-gray-200">
                                         {project.externalLink && (
                                             <a
                                                 href={project.externalLink}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
-                                                className="text-sm border-b border-gray-300 hover:border-black pb-0.5 transition-colors"
+                                                className="text-xs border-b border-gray-300 hover:border-black pb-0.5 transition-colors"
                                             >
                                                 Info →
                                             </a>
@@ -187,7 +193,7 @@ const ProjectRowMobile = ({ project, delay = 0 }) => {
                                                 href={project.reviewLink}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
-                                                className="text-sm border-b border-gray-300 hover:border-black pb-0.5 transition-colors"
+                                                className="text-xs border-b border-gray-300 hover:border-black pb-0.5 transition-colors"
                                             >
                                                 Arvustus →
                                             </a>

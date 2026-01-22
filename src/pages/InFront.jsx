@@ -54,13 +54,12 @@ const InFront = () => {
         return groups;
     }, []);
 
+    const categories = Object.keys(groupedProjects);
     const totalProjects = Object.values(groupedProjects).flat().length;
-    const categories = ['film ja reklaam', 'teater', 'shoots'];
 
     return (
         <div className="min-h-screen bg-white w-full">
             {/* Header */}
-
             <header className="pt-8 md:pt-24 pb-6 md:pb-12 px-6 md:px-12 border-b border-gray-100 w-full bg-white z-40 sticky top-0">
                 <div className="max-w-[1920px] mx-auto flex flex-col md:flex-row justify-between items-start gap-12">
 
@@ -73,24 +72,23 @@ const InFront = () => {
                         </h2>
                     </div>
 
-
                 </div>
             </header>
 
             <main className="w-full">
                 {isMobile ? (
                     // MOBILE VIEW
-                    <div className="px-6 py-8 max-w-[600px] mx-auto">
+                    <div className="px-6 py-2 max-w-[600px] mx-auto">
                         {categories.map((category) => (
-                            <div key={category} className="mb-12">
-                                {/* Category Header with Divider */}
-                                <div className="flex items-center gap-4 py-6 mb-10 border-b border-gray-100">
-                                    <h2 className="typography-label font-semibold text-gray-700 ml-[11px] ">
+                            <div key={category} className="mb-6">
+                                {/* Category Header */}
+                                <div className="py-3 mb-4 border-b border-gray-100">
+                                    <h2 className="font-mono text-sm uppercase tracking-[0.3em] text-gray-700 font-bold">
                                         {category}
                                     </h2>
                                 </div>
 
-                                <div className="space-y-12 mb-16">
+                                <div className="space-y-4">
                                     {groupedProjects[category].map((project, index) => (
                                         <ProjectRowMobile
                                             key={project.id}
@@ -109,7 +107,7 @@ const InFront = () => {
                             <div key={category} className="mb-12 md:mb-20">
                                 {/* Category Header with Line Anchor */}
                                 <div className="flex items-center gap-4 px-8 md:px-12 pt-12 md:pt-16 pb-6 md:pb-8">
-                                    <h2 className="font-mono font-semibold text-base uppercase tracking-[0.3em] text-gray-700 mb-8 ml-[11px] ">
+                                    <h2 className="font-mono font-semibold text-base uppercase tracking-[0.3em] text-gray-700">
                                         {category}
                                     </h2>
                                     <div className="flex-grow h-[1px] bg-gray-100"></div>

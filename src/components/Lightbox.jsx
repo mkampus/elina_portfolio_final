@@ -199,7 +199,7 @@ const Lightbox = ({ media, currentIndex, setCurrentIndex, project, onClose }) =>
                     <div className="absolute inset-y-0 left-0 w-24 z-30 flex items-center justify-center group/nav">
                         <button
                             onClick={prev}
-                            className="opacity-0 group-hover/nav:opacity-100 transition-opacity bg-white/90 backdrop-blur-sm px-3 py-2 text-[8px] font-mono uppercase tracking-widest cursor-w-resize"
+                            className="opacity-40 hover:opacity-100 transition-opacity bg-white/90 backdrop-blur-sm px-3 py-2 text-[8px] font-mono uppercase tracking-widest cursor-w-resize"
                         >
                             Eelm
                         </button>
@@ -207,8 +207,7 @@ const Lightbox = ({ media, currentIndex, setCurrentIndex, project, onClose }) =>
                     <div className="absolute inset-y-0 right-0 w-24 z-30 flex items-center justify-center group/nav">
                         <button
                             onClick={next}
-                            className="opacity-0 group-hover/nav:opacity-100 transition-opacity bg-white/90 backdrop-blur-sm px-3 py-2 text-[8px] font-mono uppercase tracking-widest cursor-e-resize"
-                        >
+                            className="opacity-40 hover:opacity-100 transition-opacity bg-white/90 backdrop-blur-sm px-3 py-2 text-[8px] font-mono uppercase tracking-widest cursor-w-resize"                        >
                             Järg
                         </button>
                     </div>
