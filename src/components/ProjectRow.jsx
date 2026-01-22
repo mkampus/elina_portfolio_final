@@ -3,6 +3,7 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useProjectMedia } from '../hooks/useProjectMedia';
 import { useModalState } from '../hooks/useModalState';
+import FitTitle from './FitTitle';
 import Lightbox from './Lightbox';
 
 const ProjectRow = ({ project, delay = 0 }) => {
@@ -122,21 +123,27 @@ const ProjectRow = ({ project, delay = 0 }) => {
                 </div>
 
                 {/* INFO PANEL */}
-                <div className="w-full md:w-[420px] min-w-0 flex-shrink-0 flex flex-col p-8 md:p-12 border-l border-gray-100 bg-white z-30">
+                <div className="w-full md:w-[420px] min-w-0 flex-shrink-0 flex flex-col min-h-0 p-8 md:p-12 border-l border-gray-100 bg-white z-30">
                     {/* Content */}
                     <div className="flex-1">
-                        <div className="flex items-center justify-between mb-8 gap-2">
-                            <span className="text-[10px] font-mono text-accent-front tracking-tighter uppercase font-semibold flex-shrink-0">
-                                // {project.year}
-                            </span>
+                        <div className="flex items-center justify-between mb-6 md:mb-8 gap-2">
+            <span className="text-[10px] font-mono text-accent-front tracking-tighter uppercase font-semibold flex-shrink-0">
+                // {project.year}
+            </span>
                             <span className="text-[8px] uppercase tracking-[0.4em] text-gray-300 font-medium flex-shrink-0">
-                                {project.medium}
-                            </span>
+                {project.medium}
+            </span>
                         </div>
 
-                        <h2 className="text-2xl md:text-3xl font-light tracking-tight leading-[1.1] mb-8 uppercase break-words">
-                            {project.title}
-                        </h2>
+                        <div className="mb-6 md:mb-8 h-[84px] md:h-[100px] overflow-hidden">
+                            <FitTitle
+                                text={project.title}
+                                maxPx={30}
+                                minPx={18}
+                                lineHeight={1.1}
+                                className="font-light tracking-tight uppercase break-words"
+                            />
+                        </div>
 
                         {project.role && (
                             <div className="space-y-6 pt-8 border-t border-gray-100">
