@@ -172,7 +172,7 @@ const ProjectRow = ({ project, delay = 0 }) => {
                     <div className="flex-1 min-h-0 overflow-hidden">
                         <div className="flex items-center justify-between mb-4 gap-2">
               <span className="text-[10px] font-mono text-accent-front tracking-tighter uppercase font-semibold flex-shrink-0">
-                // {project.year}
+                <span aria-hidden="true">/</span><span aria-hidden="true">/</span> {project.year}
               </span>
                             <span className="text-[8px] uppercase tracking-[0.4em] text-gray-300 font-medium flex-shrink-0">
                 {project.medium}

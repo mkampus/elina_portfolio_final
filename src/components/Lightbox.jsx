@@ -214,7 +214,7 @@ const Lightbox = ({ media, currentIndex, setCurrentIndex, project, onClose }) =>
                                 {project.title}
                             </h2>
                             <p className="text-[9px] md:text-[10px] font-mono text-gray-400 uppercase tracking-widest">
-                                {project.year} // {project.medium}
+                                {project.year} <span aria-hidden="true">/</span><span aria-hidden="true">/</span> {project.medium}
                             </p>
                         </div>
 
