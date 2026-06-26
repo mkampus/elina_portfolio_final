@@ -1,6 +1,11 @@
 import { useMemo } from 'react';
 
-export const useProjectMedia = (mediaFolder) => {
+export const useProjectMedia = (projectOrFolder) => {
+    const mediaFolder =
+        typeof projectOrFolder === 'string'
+            ? projectOrFolder
+            : projectOrFolder?.mediaFolder;
+
     return useMemo(() => {
         if (!mediaFolder) return [];
 

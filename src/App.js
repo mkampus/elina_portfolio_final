@@ -1,17 +1,23 @@
-import React, { Suspense, lazy } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React from 'react';
+import { BrowserRouter as Router, Link, Route, Routes } from 'react-router-dom';
 import { ModalProvider } from './hooks/useModalState';
+import InFront from './pages/InFront';
+import ProjectPage from './pages/ProjectPage';
 import './styles/globals.css';
 
-const InFront = lazy(() => import('./pages/InFront'));
-
-const PageLoader = () => (
-    <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-            <div className="w-12 h-12 border-2 border-border-color border-t-accent-front rounded-full animate-spin mx-auto mb-4"></div>
-            <p className="typography-caption">Laeb...</p>
+const NotFound = () => (
+    <main className="min-h-screen bg-white px-6 py-16 md:px-12">
+        <div className="mx-auto max-w-4xl">
+            <h1 className="text-3xl font-light uppercase tracking-tight">Page not found</h1>
+            <p className="mt-4 text-sm text-gray-700">The page URL does not exist.</p>
+            <Link
+                to="/"
+                className="mt-8 inline-block border border-black px-4 py-2 text-xs uppercase tracking-[0.2em] hover:bg-black hover:text-white transition-colors"
+            >
+                Back to homepage
+            </Link>
         </div>
-    </div>
+    </main>
 );
 
 function App() {
@@ -23,11 +29,11 @@ function App() {
                     v7_relativeSplatPath: true,
                 }}
             >
-                <Suspense fallback={<PageLoader />}>
-                    <Routes>
-                        <Route path="/" element={<InFront />} />
-                    </Routes>
-                </Suspense>
+                <Routes>
+                    <Route path="/" element={<InFront />} />
+                    <Route path="/:categorySlug/:projectSlug" element={<ProjectPage />} />
+                    <Route path="*" element={<NotFound />} />
+                </Routes>
             </Router>
         </ModalProvider>
     );

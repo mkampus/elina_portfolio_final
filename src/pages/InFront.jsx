@@ -3,6 +3,7 @@ import React, { useMemo, useState, useEffect } from 'react';
 import infrontData from '../data/infrontData.json';
 import ProjectRow from '../components/ProjectRow';
 import ProjectRowMobile from '../components/ProjectRowMobile';
+import SeoHead from '../components/SeoHead';
 
 const InFront = () => {
     const checkIsMobile = () => {
@@ -77,8 +78,19 @@ const InFront = () => {
 
     const isLandscapeMobile = isLandscape && isMobile;
 
+    const homepageDescription =
+        infrontData.homepageDescription ||
+        `${infrontData.hero.name} is an ${infrontData.hero.title}. Explore film, theatre, and shoot projects.`;
+
     return (
         <div className="min-h-screen bg-white w-full">
+            <SeoHead
+                title={`${infrontData.hero.name} - ${infrontData.hero.title}`}
+                description={homepageDescription}
+                canonicalPath="/"
+                ogImage={infrontData.ogImage}
+            />
+
             {/* Header - responsive, compact in landscape */}
             <header
                 className={`border-b border-gray-100 w-full bg-white z-40 sticky top-0 ${
