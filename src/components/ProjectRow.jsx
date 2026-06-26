@@ -150,7 +150,7 @@ const ProjectRow = ({ project, delay = 0 }) => {
                                     />
                                 ) : (
                                     <img
-                                        src={item.src}
+                                        src={item.thumbnailSrc || item.src}
                                         alt={`${project.title} media ${idx + 1}`}
                                         className="h-full w-auto max-w-none object-contain transition-transform duration-700 group-hover/item:scale-[1.03]"
                                         loading="lazy"

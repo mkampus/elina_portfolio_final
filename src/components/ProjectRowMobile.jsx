@@ -108,7 +108,7 @@ const ProjectRowMobile = ({ project, delay = 0 }) => {
                             />
                         ) : (
                             <img
-                                src={currentMedia.src}
+                                src={currentMedia.thumbnailSrc || currentMedia.src}
                                 alt={project.title}
                                 className="w-full h-full object-contain"
                                 loading="lazy"

@@ -185,7 +185,7 @@ const ProjectPage = () => {
                                         />
                                     ) : (
                                         <img
-                                            src={item.src}
+                                            src={item.thumbnailSrc || item.src}
                                             alt={item.alt}
                                             loading="lazy"
                                             decoding="async"
