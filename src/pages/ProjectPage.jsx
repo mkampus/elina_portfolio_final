@@ -190,6 +190,11 @@ const ProjectPage = () => {
                                             loading="lazy"
                                             decoding="async"
                                             className="h-[320px] w-full object-contain transition-transform duration-300 group-hover:scale-[1.02]"
+                                            onError={(event) => {
+                                                if (event.currentTarget.src !== item.src) {
+                                                    event.currentTarget.src = item.src;
+                                                }
+                                            }}
                                         />
                                     )}
                                     {item.caption && (

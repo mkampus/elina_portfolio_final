@@ -149,6 +149,11 @@ const ProjectRow = ({ project, delay = 0 }) => {
                                         className="h-full w-auto max-w-none object-contain transition-transform duration-700 group-hover/item:scale-[1.03]"
                                         loading="lazy"
                                         decoding="async"
+                                        onError={(event) => {
+                                            if (event.currentTarget.src !== item.src) {
+                                                event.currentTarget.src = item.src;
+                                            }
+                                        }}
                                     />
                                 )}
 

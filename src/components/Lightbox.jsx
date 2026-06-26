@@ -89,6 +89,14 @@ const Lightbox = ({ media, currentIndex, setCurrentIndex, project, onClose }) =>
                                     src={activeAsset.src}
                                     alt=""
                                     className="w-full h-full object-contain"
+                                    onError={(event) => {
+                                        if (
+                                            activeAsset.thumbnailSrc &&
+                                            event.currentTarget.src !== activeAsset.thumbnailSrc
+                                        ) {
+                                            event.currentTarget.src = activeAsset.thumbnailSrc;
+                                        }
+                                    }}
                                 />
                             )}
                         </div>
@@ -171,6 +179,14 @@ const Lightbox = ({ media, currentIndex, setCurrentIndex, project, onClose }) =>
                                     src={activeAsset.src}
                                     alt=""
                                     className="max-w-full max-h-[40vh] md:max-h-[80vh] object-contain block"
+                                    onError={(event) => {
+                                        if (
+                                            activeAsset.thumbnailSrc &&
+                                            event.currentTarget.src !== activeAsset.thumbnailSrc
+                                        ) {
+                                            event.currentTarget.src = activeAsset.thumbnailSrc;
+                                        }
+                                    }}
                                 />
                             )}
                         </div>

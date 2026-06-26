@@ -105,6 +105,11 @@ const ProjectRowMobile = ({ project, delay = 0 }) => {
                                 className="w-full h-full object-contain"
                                 loading="lazy"
                                 decoding="async"
+                                onError={(event) => {
+                                    if (event.currentTarget.src !== currentMedia.src) {
+                                        event.currentTarget.src = currentMedia.src;
+                                    }
+                                }}
                             />
                         )}
                     </div>
