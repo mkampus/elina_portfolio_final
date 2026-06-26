@@ -1,15 +1,21 @@
 // src/components/ProjectRow.jsx
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 import { useProjectMedia } from "../hooks/useProjectMedia";
 import { useModalState } from "../hooks/useModalState";
 import FitTitle from "./FitTitle";
 import Lightbox from "./Lightbox";
+import VisibleVideo from "./VisibleVideo";
 
 const ProjectRow = ({ project, delay = 0 }) => {
     const { setIsModalOpen } = useModalState();
     const [isExpanded, setIsExpanded] = useState(false);
     const [activeIndex, setActiveIndex] = useState(null);
+    const { ref: visibilityRef, inView: shouldRenderMedia } = useInView({
+        rootMargin: "700px 0px",
+        triggerOnce: true,
+    });
 
     const scrollRef = useRef(null);
     const speedRef = useRef(0);
@@ -111,6 +117,7 @@ const ProjectRow = ({ project, delay = 0 }) => {
 
     return (
         <motion.div
+            ref={visibilityRef}
             initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay, duration: 0.5 }}
@@ -128,7 +135,7 @@ const ProjectRow = ({ project, delay = 0 }) => {
                     onMouseMove={handleMouseMove}
                 >
                     <div ref={scrollRef} className="flex h-full overflow-x-auto no-scrollbar">
-                        {media.map((item, idx) => (
+                        {shouldRenderMedia ? media.map((item, idx) => (
                             <button
                                 key={idx}
                                 onClick={() => openLightbox(idx)}
@@ -137,13 +144,8 @@ const ProjectRow = ({ project, delay = 0 }) => {
                                 className="h-full flex-shrink-0 border-r border-white relative cursor-zoom-in group/item overflow-hidden bg-transparent p-0 border-0 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-front"
                             >
                                 {item.type === "video" ? (
-                                    <video
+                                    <VisibleVideo
                                         src={item.src}
-                                        autoPlay
-                                        muted
-                                        loop
-                                        playsInline
-                                        preload="metadata"
                                         className="h-full w-auto max-w-none object-contain transition-transform duration-700 group-hover/item:scale-[1.03]"
                                     />
                                 ) : (
@@ -162,7 +164,9 @@ const ProjectRow = ({ project, delay = 0 }) => {
                   </span>
                                 </div>
                             </button>
-                        ))}
+                        )) : (
+                            <div className="h-full w-full bg-gray-50" aria-hidden="true" />
+                        )}
                     </div>
                 </div>
 

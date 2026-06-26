@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import infrontData from '../data/infrontData.json';
 import Lightbox from '../components/Lightbox';
 import SeoHead from '../components/SeoHead';
+import VisibleVideo from '../components/VisibleVideo';
 import { useProjectMedia } from '../hooks/useProjectMedia';
 import {
     findProjectByRoute,
@@ -178,11 +179,8 @@ const ProjectPage = () => {
                                     className="group overflow-hidden border border-gray-100 bg-gray-50 text-left"
                                 >
                                     {item.type === 'video' ? (
-                                        <video
+                                        <VisibleVideo
                                             src={item.src}
-                                            preload="metadata"
-                                            muted
-                                            playsInline
                                             className="h-[320px] w-full object-contain transition-transform duration-300 group-hover:scale-[1.02]"
                                         />
                                     ) : (
