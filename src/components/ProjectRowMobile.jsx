@@ -1,7 +1,6 @@
 // ProjectRowMobile.jsx
 import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { useInView } from 'react-intersection-observer';
 import { useProjectMedia } from '../hooks/useProjectMedia';
 import { useModalState } from '../hooks/useModalState';
 import Lightbox from './Lightbox';
@@ -12,15 +11,11 @@ const ProjectRowMobile = ({ project, delay = 0 }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isExpanded, setIsExpanded] = useState(false);
     const [activeIndex, setActiveIndex] = useState(null);
-    const { ref: visibilityRef, inView: shouldRenderMedia } = useInView({
-        rootMargin: '700px 0px',
-        triggerOnce: true,
-    });
     const media = useProjectMedia(project?.mediaFolder);
     const touchStartX = useRef(null);
     const touchStartY = useRef(null);
 
-    const currentMedia = shouldRenderMedia ? media[currentIndex] : null;
+    const currentMedia = media[currentIndex];
 
     const handleNext = () => {
         setCurrentIndex((currentIndex + 1) % media.length);
@@ -80,7 +75,6 @@ const ProjectRowMobile = ({ project, delay = 0 }) => {
 
     return (
         <motion.div
-            ref={visibilityRef}
             initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay, duration: 0.5 }}
@@ -98,9 +92,7 @@ const ProjectRowMobile = ({ project, delay = 0 }) => {
                         className="w-full h-56 overflow-hidden flex items-center justify-center bg-white cursor-zoom-in"
                         onClick={() => handleOpenLightbox(currentIndex)}
                     >
-                        {!shouldRenderMedia ? (
-                            <div className="w-full h-full bg-gray-50" aria-hidden="true" />
-                        ) : currentMedia?.type === 'video' ? (
+                        {currentMedia?.type === 'video' ? (
                             <VisibleVideo
                                 src={currentMedia.src}
                                 className="w-full h-full object-contain"
